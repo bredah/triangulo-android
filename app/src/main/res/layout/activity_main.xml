@@ -18,8 +18,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/valor_a"
-        android:inputType="textPersonName"
-        android:onClick="clickValorA" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/valor_b"
@@ -30,8 +29,7 @@
         android:layout_below="@+id/valor_a"
         android:ems="10"
         android:hint="@string/valor_b"
-        android:inputType="textPersonName"
-        android:onClick="clickValorB" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/valor_c"
@@ -42,8 +40,7 @@
         android:layout_below="@+id/valor_b"
         android:ems="10"
         android:hint="@string/valor_c"
-        android:inputType="textPersonName"
-        android:onClick="clickValorC" />
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/button_validar"
@@ -55,14 +52,23 @@
         android:onClick="clickValidar"
         android:text="@string/validar" />
 
-    <TextView
-        android:id="@+id/textResult"
+    <Button
+        android:id="@+id/button_limpar"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button_validar"
-        android:text="X"
+        android:onClick="clickLimpar"
+        android:text="@string/limpar" />
+
+    <TextView
+        android:id="@+id/textResult"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_limpar"
         android:textAlignment="center"
-        android:textSize="20dp" />
+        android:textSize="16dp" />
 </RelativeLayout>
