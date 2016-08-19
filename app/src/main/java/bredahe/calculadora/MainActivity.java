@@ -5,6 +5,8 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.net.Uri;
+import android.os.IBinder;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,17 +89,19 @@ public class MainActivity extends AppCompatActivity {
         // Verfica se os campos apresentam valores corretos
         if (campoA.getText().toString().matches("\\D") ||
                 campoA.getText().toString().isEmpty() ||
+                !isPositive(campoA) ||
                 campoB.getText().toString().matches("\\D") ||
                 campoB.getText().toString().isEmpty() ||
+                !isPositive(campoB) ||
                 campoC.getText().toString().matches("\\D") ||
-                campoC.getText().toString().isEmpty()) {
+                campoC.getText().toString().isEmpty() ||
+                !isPositive(campoC)) {
             msgValidacao = "Somente digitos números inteiros e maiores que '0' são aceitos";
         } else {
-            // Verifica o tipo do triãngulo
             int valorA = Integer.parseInt(campoA.getText().toString());
             int valorB = Integer.parseInt(campoB.getText().toString());
             int valorC = Integer.parseInt(campoC.getText().toString());
-
+            // Verifica o tipo do triãngulo
             if (valorA == valorB && valorB == valorC) {
                 msgValidacao = "Triângulo Equilátero!\n3 lados iguais.";
             } else if (valorA == valorB || valorA == valorC || valorB == valorC) {
@@ -106,10 +111,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         campoResultado.setText(msgValidacao);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(campoResultado.getWindowToken(), 0);
+        this.hideKeyboard(campoResultado.getWindowToken());
     }
-
 
     public void clickLimpar(View view) {
         final EditText campoA = (EditText) findViewById(R.id.valor_a);
@@ -120,7 +123,31 @@ public class MainActivity extends AppCompatActivity {
         campoB.setText("");
         campoC.setText("");
         campoResultado.setText("");
+        this.hideKeyboard(campoResultado.getWindowToken());
     }
 
+    /**
+     * Escode o teclado
+     *
+     * @param uiToken Token do elemento para liberar o foco e esconder o teclado
+     */
+    private void hideKeyboard(IBinder uiToken) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(uiToken, 0);
+    }
 
+    /**
+     * Verifica se o conteúdo do campo é um número positivo
+     *
+     * @param editText Elemento de entrada de texto
+     * @return Informa se é positivo o número informado
+     */
+    private boolean isPositive(EditText editText) {
+
+        try {
+            return Integer.parseInt(editText.getText().toString()) > 0;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }
