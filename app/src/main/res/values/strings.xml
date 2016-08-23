@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculadora</string>
+    <string name="app_name">Triângulo</string>
     <string name="valor_a">Valor A</string>
     <string name="valor_b">Valor B</string>
     <string name="valor_c">Valor C</string>
